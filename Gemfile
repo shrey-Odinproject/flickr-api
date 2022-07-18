@@ -70,3 +70,12 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+# simple_form 
+gem 'simple_form'
+
+# flicker api
+gem 'flickr', '~> 2.1'
+
+# manage env variable
+gem "figaro"
