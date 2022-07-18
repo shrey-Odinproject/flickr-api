@@ -1,3 +1,15 @@
-<% @photos.each do |ph| %>
-    <img src="https://live.staticflickr.com/<%=ph.server%>/<%=ph.id%>_<%=ph.secret%>.jpg" alt="___"></img>
-<%end%>
+<%= simple_form_for :search, url: root_path, method: "GET" do |f| %>
+  <%= f.input :user_id, placeholder: 'enter user_id ' %>
+  <%= f.button :submit, "Get photos" %>
+<% end %>
+
+<%# params['search] exist  only after clicking button %>
+<% if params['search'] %> 
+
+    <% @photos.each do |ph| %>
+        <img src="https://live.staticflickr.com/<%=ph.server%>/<%=ph.id%>_<%=ph.secret%>.jpg" alt="___"></img>
+    <%end%>
+    
+<% end %>
+
+

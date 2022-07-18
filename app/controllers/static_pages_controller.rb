@@ -1,7 +1,15 @@
 class StaticPagesController < ApplicationController
   def home
     flickr = Flickr.new # reads arguments from env variable
-    @photos = flickr.photos.search(user_id: '196089601@N03')
+
+    if params['search'] # if required search hash exists
+      if params['search']['user_id'].empty?
+        flash[:error] = 'empty input try again...'
+        redirect_to root_path
+      else
+        @photos = flickr.photos.search(user_id: params['search']['user_id'])
+      end
+    end
 
     # Return a list of photos matching some criteria. Only photos visible to the calling user will be returned.
     # To return private or semi-private photos, the caller must be authenticated with 'read' permissions,
