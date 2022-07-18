@@ -1,14 +1,19 @@
 class StaticPagesController < ApplicationController
   def home
-    flickr = Flickr.new # reads arguments from env variable
+    begin
+      flickr = Flickr.new # reads arguments from env variable
 
-    if params['search'] # if required search hash exists
-      if params['search']['user_id'].empty?
-        flash[:error] = 'empty input try again...'
-        redirect_to root_path
-      else
-        @photos = flickr.photos.search(user_id: params['search']['user_id'])
+      if params['search'] # if required search hash exists
+        if params['search']['user_id'].empty?
+          flash[:error] = 'empty input try again...'
+          redirect_to root_path
+        else
+          @photos = flickr.photos.search(user_id: params['search']['user_id'])
+        end
       end
+    rescue StandardError => e
+      flash[:alert] = "#{e.class}: #{e.message}. Try Again."
+      redirect_to root_path
     end
 
     # Return a list of photos matching some criteria. Only photos visible to the calling user will be returned.
